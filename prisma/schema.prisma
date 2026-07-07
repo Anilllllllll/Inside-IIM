@@ -1,0 +1,39 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String           @id @default(uuid())
+  email         String           @unique
+  name          String?
+  password      String           // Hashed password
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  reports       ResearchReport[]
+}
+
+model ResearchReport {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName     String
+  ticker          String
+  exchange        String
+  decision        String   // "INVEST", "WATCH", "PASS"
+  confidenceScore Int      // 0 to 100
+  summary         String   // Executive summary
+  fullReasoning   Json     // Detailed JSON outputs of all agents
+  memoMarkdown    String   // The full investment memo markdown text
+  agentTrace      Json     // JSON log tracing the execution times and state changes of each node
+  sources         String[] // List of external source URLs
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([userId])
+  @@index([ticker])
+}
