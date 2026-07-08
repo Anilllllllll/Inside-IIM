@@ -70,7 +70,14 @@ export async function competitiveAnalystNode(state: InvestIQState): Promise<Part
       name: "CompetitiveAnalyst",
     });
 
-    const searchContext = JSON.stringify(searchRes.results, null, 2);
+    const searchContext = JSON.stringify(
+      searchRes.results.slice(0, 3).map((r: any) => ({
+        title: r.title,
+        content: r.content.slice(0, 500),
+      })),
+      null,
+      2
+    );
     const prompt = `You are a Senior Industry & Competitive Strategist.
 Your goal is to evaluate the competitive position and economic moat of ${entity.name} (${entity.ticker}).
 

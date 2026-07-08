@@ -70,7 +70,14 @@ export async function riskAnalystNode(state: InvestIQState): Promise<Partial<Inv
       name: "RiskAnalyst",
     });
 
-    const searchContext = JSON.stringify(searchRes.results, null, 2);
+    const searchContext = JSON.stringify(
+      searchRes.results.slice(0, 3).map((r: any) => ({
+        title: r.title,
+        content: r.content.slice(0, 500),
+      })),
+      null,
+      2
+    );
     const prompt = `You are an expert Investment Risk Manager.
 Your role is to identify and catalog the risk factors facing ${entity.name} (${entity.ticker}) based on current news and corporate disclosures.
 

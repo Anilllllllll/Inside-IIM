@@ -55,7 +55,14 @@ export async function newsSentimentNode(state: InvestIQState): Promise<Partial<I
       name: "NewsSentiment",
     });
 
-    const searchContext = JSON.stringify(searchRes.results, null, 2);
+    const searchContext = JSON.stringify(
+      searchRes.results.slice(0, 3).map((r: any) => ({
+        title: r.title,
+        content: r.content.slice(0, 500),
+      })),
+      null,
+      2
+    );
     const prompt = `You are a Senior Market Sentiment Analyst.
 Your task is to review recent news search results for ${entity.name} (${entity.ticker}) and assess market sentiment.
 
