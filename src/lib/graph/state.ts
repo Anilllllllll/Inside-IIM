@@ -103,7 +103,7 @@ export const InvestIQAnnotation = Annotation.Root({
     default: () => 0,
   }),
   critiqueFeedback: Annotation<string | null>({
-    reducer: (x, y) => y ?? x,
+    reducer: (x, y) => (y !== undefined ? y : x),
     default: () => null,
   }),
   memo: Annotation<string | null>({
