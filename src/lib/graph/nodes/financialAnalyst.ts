@@ -2,6 +2,7 @@ import { z } from "zod";
 import { getChatModel } from "../llm";
 import { InvestIQState } from "../state";
 import { getFinancialMetrics } from "../../financial-api";
+import { performWebSearch } from "../../search-api";
 
 const FinancialAnalystSchema = z.object({
   score: z.number().min(1).max(10).describe("Overall financial score from 1 to 10 based on analytical ratios"),
@@ -131,7 +132,6 @@ CRITICAL: If the raw financial data contains fallback metrics (P/E 22.4, PEG 1.2
         },
         summary: `Simulated metrics compiled for ${financialData?.name || ticker}. Valuation: P/E: ${financialData?.peRatio || 22.4}, Debt/Equity: ${financialData?.debtToEquity?.toFixed(2) || '0.50'}, Current Ratio: ${financialData?.currentRatio?.toFixed(2) || '1.50'}.`,
         sources: [financialData?.source || "Fallback System"],
-        annualReports: financialData?.annualReports || [],
       },
       sources: [financialData?.source || "Fallback System"],
     };

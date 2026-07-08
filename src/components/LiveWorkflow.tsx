@@ -1,150 +1,185 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CheckCircle2, Circle, Loader2, ArrowRight } from "lucide-react";
+import { Terminal, Cpu, ShieldAlert, Check, Play, AlertCircle } from "lucide-react";
 
 interface Step {
   id: string;
   name: string;
   description: string;
   agent: string;
+  code: string;
 }
 
 const STEPS: Step[] = [
   {
     id: "resolver",
-    name: "Entity Resolution",
-    description: "Resolving company name to listing stock ticker...",
-    agent: "Entity Resolver Agent",
+    name: "Entity Resolver",
+    description: "Resolving query to primary listed stock symbol...",
+    agent: "RESOLVER_NODE",
+    code: "SEC_RESOLVE_TICKER",
   },
   {
-    id: "specialists",
-    name: "Parallel Specialist Research",
-    description: "Gathering metrics, news sentiment, moat, and risk factors in parallel...",
-    agent: "Financial, News, Competitive & Risk Agents",
+    id: "financial",
+    name: "Financial Data Collection",
+    description: "Scraping key balance sheets, metrics, and ratios...",
+    agent: "FUNDAMENTAL_NODE",
+    code: "DATA_PULL_RATIOS",
   },
   {
-    id: "adversaries",
-    name: "Adversarial Syntheses",
-    description: "Compiling extreme long (Bull) and short (Bear) arguments...",
-    agent: "Bull Case & Bear Case Agents",
+    id: "news",
+    name: "News Intelligence",
+    description: "Scanning live media headlines and scraping Tavily feeds...",
+    agent: "SENTIMENT_NODE",
+    code: "SENTIMENT_SCAN_MEDIA",
   },
   {
     id: "debate",
-    name: "Debate & Reconciliation",
-    description: "Stress-testing cases side-by-side against financial columns...",
-    agent: "Adversarial Debate Arbitrator",
+    name: "Bull vs Bear Debate",
+    description: "Pitting Growth (Bull) vs Short-Seller (Bear) cases...",
+    agent: "DEBATE_ARBITRATOR",
+    code: "ADVERSARIAL_THESIS_RUN",
   },
   {
-    id: "committee",
-    name: "Investment Committee Verdict",
-    description: "Formulating final BUY/WATCH/PASS decision and memo...",
-    agent: "Investment Committee Agent",
+    id: "risk",
+    name: "Risk Committee",
+    description: "CRO node auditing logical consistency and credit limits...",
+    agent: "CRO_QUALITY_CONTROL",
+    code: "CRO_COMPLIANCE_AUDIT",
   },
   {
-    id: "critique",
-    name: "Self-Correction & CRO Audit",
-    description: "Checking logical consistency and correcting overconfidence bias...",
-    agent: "Self-Critique Quality Control Agent",
-  },
-  {
-    id: "saving",
-    name: "Archiving Results",
-    description: "Saving structural analysis, citation links, and trace logs to PostgreSQL...",
-    agent: "Database Saving Agent",
+    id: "decision",
+    name: "Final Investment Decision",
+    description: "Compiling committee memo and formatting research dossier...",
+    agent: "DECISION_NODE",
+    code: "MEMO_COMPILATION_DONE",
   },
 ];
 
-export function LiveWorkflow({ active: _active }: { active?: boolean }) {
+export function LiveWorkflow() {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [logs, setLogs] = useState<string[]>([]);
 
   useEffect(() => {
-    // Cycle through steps to simulate the active backend LangGraph flow
+    // Set initial log
+    setLogs([
+      `[${new Date().toLocaleTimeString()}] INIT: Launching InvestIQ Multi-Agent Workflow...`,
+      `[${new Date().toLocaleTimeString()}] RESOLVER_NODE: Listening for request payload...`,
+    ]);
+
     const interval = setInterval(() => {
       setCurrentStepIndex((prev) => {
         if (prev < STEPS.length - 1) {
-          return prev + 1;
+          const nextIndex = prev + 1;
+          const nextStep = STEPS[nextIndex];
+          
+          setLogs((prevLogs) => [
+            ...prevLogs,
+            `[${new Date().toLocaleTimeString()}] ${STEPS[prev].agent}: Completed ${STEPS[prev].code} successfully.`,
+            `[${new Date().toLocaleTimeString()}] ${nextStep.agent}: Launching ${nextStep.code}...`,
+          ]);
+          
+          return nextIndex;
         }
         return prev;
       });
-    }, 4500); // 4.5 seconds per node step average (takes ~30s total)
+    }, 4000); // 4 seconds per node
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="w-full max-w-xl mx-auto p-8 rounded-2xl bg-neutral-900/80 border border-neutral-800 shadow-2xl backdrop-blur-xl">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h3 className="text-xl font-semibold text-neutral-100 font-sans tracking-wide">
-            InvestIQ AI Agent Engine
-          </h3>
-          <p className="text-sm text-neutral-400 mt-1 font-sans">
-            Executing Multi-Agent state machine workflow
-          </p>
+    <div className="w-full max-w-2xl mx-auto bg-[#0a0a0a] border border-[#1f1f1f] shadow-2xl p-6 font-mono text-xs text-neutral-300">
+      
+      {/* Terminal Title Bar */}
+      <div className="flex items-center justify-between border-b border-[#1f1f1f] pb-4 mb-6">
+        <div className="flex items-center gap-2">
+          <Terminal className="w-4 h-4 text-emerald-500" />
+          <span className="font-bold tracking-wider text-neutral-200">AI ANALYST DESK v1.2</span>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-900/50 text-emerald-400 text-xs font-semibold animate-pulse">
-          <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-          Running Live Graph
+        <div className="flex items-center gap-2 text-[10px] text-emerald-400">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse block"></span>
+          <span>PIPELINE RUNNING</span>
         </div>
       </div>
 
-      <div className="space-y-6">
+      {/* Header Info */}
+      <div className="mb-6 bg-[#070707] border border-[#151515] p-3 text-[11px] text-neutral-400 space-y-1">
+        <div>SYSTEM: Stateful Multi-Agent LangGraph Machine</div>
+        <div>THREAD: RESEARCH_PROCESSOR_ID_{Math.random().toString(36).slice(2, 8).toUpperCase()}</div>
+        <div>METRICS: 7 Specialists • Dynamic Fallbacks Enabled</div>
+      </div>
+
+      {/* Pipeline Steps Grid */}
+      <div className="space-y-3 mb-6">
         {STEPS.map((step, index) => {
           const isActive = index === currentStepIndex;
           const isCompleted = index < currentStepIndex;
           const isPending = index > currentStepIndex;
 
+          let statusText = "PENDING";
+          let statusColor = "text-neutral-600 border-neutral-800";
+          if (isActive) {
+            statusText = "RUNNING";
+            statusColor = "text-amber-500 border-amber-900/50 bg-amber-950/20";
+          } else if (isCompleted) {
+            statusText = "OK";
+            statusColor = "text-emerald-500 border-emerald-900/50 bg-emerald-950/20";
+          }
+
           return (
             <div
               key={step.id}
-              className={`flex items-start gap-4 p-4 rounded-xl transition-all duration-300 ${
+              className={`border p-3 flex flex-col md:flex-row md:items-center justify-between gap-2 transition-all ${
                 isActive
-                  ? "bg-neutral-800/50 border border-neutral-700/60 shadow-lg translate-x-2"
-                  : "bg-transparent border border-transparent opacity-60"
+                  ? "border-neutral-700 bg-neutral-900/30"
+                  : "border-[#151515] bg-[#070707]/30 opacity-70"
               }`}
             >
-              <div className="mt-1">
-                {isCompleted ? (
-                  <CheckCircle2 className="w-6 h-6 text-emerald-400 fill-emerald-950/20" />
-                ) : isActive ? (
-                  <Loader2 className="w-6 h-6 text-indigo-400 animate-spin" />
-                ) : (
-                  <Circle className="w-6 h-6 text-neutral-600" />
-                )}
+              <div className="flex items-center gap-3">
+                <div className="w-5 h-5 rounded border border-[#1f1f1f] flex items-center justify-center bg-[#070707]">
+                  {isCompleted ? (
+                    <Check className="w-3.5 h-3.5 text-emerald-500" />
+                  ) : isActive ? (
+                    <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                  ) : (
+                    <span className="text-[9px] text-neutral-600">{index + 1}</span>
+                  )}
+                </div>
+                <div>
+                  <div className="font-semibold text-neutral-200">{step.name}</div>
+                  {isActive && <div className="text-[10px] text-neutral-400 mt-0.5">{step.description}</div>}
+                </div>
               </div>
 
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <h4
-                    className={`text-md font-semibold tracking-wide font-sans ${
-                      isActive ? "text-indigo-300" : isCompleted ? "text-neutral-300" : "text-neutral-500"
-                    }`}
-                  >
-                    {step.name}
-                  </h4>
-                  <span className="text-xs text-neutral-500 font-sans px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800/80">
-                    {step.agent}
-                  </span>
-                </div>
-                
-                {isActive && (
-                  <p className="text-sm text-neutral-300 mt-1 font-sans animate-fade-in">
-                    {step.description}
-                  </p>
-                )}
+              <div className="flex items-center gap-2">
+                <span className="text-[9px] text-neutral-500 uppercase px-1.5 py-0.5 rounded bg-neutral-900 border border-neutral-800">
+                  {step.agent}
+                </span>
+                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${statusColor}`}>
+                  {statusText}
+                </span>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Progress Bar */}
-      <div className="w-full bg-neutral-950 rounded-full h-1.5 mt-8 overflow-hidden border border-neutral-900">
+      {/* Mini Progress Bar */}
+      <div className="w-full bg-[#070707] rounded-none h-1.5 border border-[#1f1f1f] mb-6 overflow-hidden">
         <div
-          className="bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 h-1.5 rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(99,102,241,0.5)]"
+          className="bg-emerald-500 h-1 rounded-none transition-all duration-700"
           style={{ width: `${((currentStepIndex + 1) / STEPS.length) * 100}%` }}
         ></div>
+      </div>
+
+      {/* Terminal Live logs */}
+      <div className="border border-[#1f1f1f] bg-[#050505] p-3 rounded-none h-28 overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-800 font-mono text-[10px] text-neutral-500 space-y-1">
+        {logs.map((log, i) => (
+          <div key={i} className={i === logs.length - 1 ? "text-neutral-400" : ""}>
+            {log}
+          </div>
+        ))}
       </div>
     </div>
   );

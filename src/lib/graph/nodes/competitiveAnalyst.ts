@@ -26,7 +26,7 @@ export async function competitiveAnalystNode(state: InvestIQState): Promise<Part
   try {
     // 1. Fetch competitive data via Tavily search
     searchRes = await performWebSearch(query, "basic");
-    citations = searchRes.results.map((r) => r.url);
+    citations = searchRes.results.map((r: any) => r.url);
 
     const model = getChatModel(0);
     

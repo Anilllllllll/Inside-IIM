@@ -3,7 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { LiveWorkflow } from "@/components/LiveWorkflow";
-import { Search, History, TrendingUp, Cpu, ShieldAlert, Award, FileText } from "lucide-react";
+import { 
+  Search, History, TrendingUp, Cpu, ShieldAlert, 
+  Activity, ArrowRight, BarChart2, Globe, Clock, CheckCircle2 
+} from "lucide-react";
 
 interface HistoryItem {
   id: string;
@@ -22,6 +25,18 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [currentDate, setCurrentDate] = useState("");
+
+  // Set date client-side only to prevent hydration mismatch
+  useEffect(() => {
+    const d = new Date();
+    setCurrentDate(d.toLocaleDateString(undefined, { 
+      weekday: 'short', 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    }).toUpperCase());
+  }, []);
 
   // Fetch report history upon mounting
   useEffect(() => {
@@ -69,170 +84,228 @@ export default function DashboardPage() {
     }
   };
 
+  const setQuickSearch = (val: string) => {
+    setQuery(val);
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center p-6">
+      <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center p-6 select-none font-mono">
         <LiveWorkflow />
-        <p className="text-neutral-500 text-xs mt-6 font-mono tracking-widest uppercase animate-pulse">
-          Compiling data from Alpha Vantage & Tavily
+        <p className="text-neutral-600 text-[10px] mt-6 tracking-widest uppercase animate-pulse">
+          CONNECTING ALPHA_VANTAGE • TAVILY SCANNERS • GRAPH SERVER
         </p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
-      {/* Top Header Navigation */}
-      <header className="border-b border-neutral-900 bg-neutral-950/80 backdrop-blur sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-gradient-to-tr from-indigo-500 via-purple-500 to-emerald-500 flex items-center justify-center font-bold text-white tracking-widest text-md shadow-[0_0_12px_rgba(99,102,241,0.4)]">
-              IQ
+    <div className="min-h-screen bg-[#050505] text-[#b0b0b0] font-mono selection:bg-neutral-800 selection:text-white text-xs">
+      
+      {/* 1. Market Header Bar */}
+      <header className="border-b border-[#1b1b1b] bg-[#090909] px-4 h-12 flex items-center justify-between select-none">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <span className="font-extrabold text-neutral-100 tracking-wider text-sm">INVESTIQ//TERMINAL</span>
+            <span className="text-[10px] text-neutral-600 border border-neutral-800 px-1 rounded">V1.2</span>
+          </div>
+
+          <div className="hidden md:flex items-center gap-4 text-[10px] text-neutral-500 border-l border-neutral-850 pl-6">
+            <div className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>MARKET STATUS: <strong className="text-emerald-500">OPEN</strong></span>
             </div>
-            <span className="font-semibold tracking-wider text-lg bg-clip-text text-transparent bg-gradient-to-r from-neutral-100 to-neutral-400">
-              InvestIQ
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span>AI NODES: <strong className="text-neutral-300">ONLINE (LLAMA 3.1/3.3)</strong></span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1 rounded bg-neutral-900 border border-neutral-800 text-xs text-neutral-400 font-mono">
-            V1.0.0
-          </div>
+        </div>
+
+        <div className="flex items-center gap-4 text-[10px] text-neutral-400">
+          <span>{currentDate || "LOADING SYSTEM DATE"}</span>
+          <span className="bg-[#121212] px-2 py-0.5 border border-[#202020] text-[#00ff66] font-semibold">SECURED</span>
         </div>
       </header>
 
-      {/* Main Grid Shell */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        
-        {/* Welcome Callout Banner */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold tracking-tight text-neutral-100">
-            AI Investment Research Terminal
-          </h1>
-          <p className="text-neutral-400 mt-2 text-md">
-            Enter any public listed corporation. Our multi-agent state graph compiles ratios, news sentiments, competitor benchmarks, and risk profiles before issuing a decision.
-          </p>
-        </div>
+      {/* Ticker Tape */}
+      <div className="border-b border-[#1b1b1b] bg-[#070707] px-4 py-1.5 text-[10px] flex gap-6 overflow-x-auto select-none no-scrollbar">
+        <div className="flex gap-1.5"><span className="text-neutral-500">AAPL:</span><span className="text-neutral-200">224.50</span><span className="text-emerald-500">+1.24%</span></div>
+        <div className="flex gap-1.5"><span className="text-neutral-500">MSFT:</span><span className="text-neutral-200">415.80</span><span className="text-rose-500">-0.32%</span></div>
+        <div className="flex gap-1.5"><span className="text-neutral-500">TSLA:</span><span className="text-neutral-200">248.10</span><span className="text-emerald-500">+4.82%</span></div>
+        <div className="flex gap-1.5"><span className="text-neutral-500">NVDA:</span><span className="text-neutral-200">128.40</span><span className="text-emerald-500">+2.15%</span></div>
+        <div className="flex gap-1.5"><span className="text-neutral-500">META:</span><span className="text-neutral-200">512.90</span><span className="text-rose-500">-1.42%</span></div>
+        <div className="flex gap-1.5"><span className="text-neutral-500">AMZN:</span><span className="text-neutral-200">189.60</span><span className="text-neutral-400">0.00%</span></div>
+      </div>
 
+      {/* Main Grid Shell */}
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        
         {/* Input Control Box */}
-        <section className="p-8 rounded-2xl bg-neutral-900/40 border border-neutral-900 shadow-xl backdrop-blur mb-16">
-          <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4">
+        <section className="bg-[#090909] border border-[#1b1b1b] p-6 mb-8">
+          <div className="mb-4">
+            <h2 className="text-sm font-bold text-neutral-200 tracking-wider">EQUITY SEARCH TERMINAL</h2>
+            <p className="text-neutral-500 text-[10px] mt-1 uppercase">
+              Submit listed equity symbol or corporate profile. Multi-agent state graph will invoke parallel research and cro audits.
+            </p>
+          </div>
+
+          <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
-              <Search className="w-5 h-5 absolute left-4 top-3.5 text-neutral-500" />
+              <Search className="w-4 h-4 absolute left-3 top-3 text-neutral-500" />
               <input
                 type="text"
-                placeholder="Enter stock name or ticker (e.g. Tesla, AAPL, Nvidia)..."
+                placeholder="ENTER SEARCH QUERY (e.g. Meta, MSFT, Apple)..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="w-full h-12 bg-neutral-950 border border-neutral-800 rounded-xl pl-12 pr-4 text-neutral-200 placeholder-neutral-600 focus:outline-none focus:border-indigo-500/80 transition-all font-sans tracking-wide text-md"
+                className="w-full h-10 bg-[#050505] border border-[#1b1b1b] rounded-none pl-10 pr-4 text-neutral-200 placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-all font-mono tracking-wide text-xs"
               />
             </div>
             <button
               type="submit"
-              className="h-12 px-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 font-semibold rounded-xl text-neutral-100 transition-all shadow-[0_4px_12px_rgba(99,102,241,0.2)] flex items-center justify-center gap-2"
+              className="h-10 px-8 bg-neutral-200 hover:bg-white text-[#050505] font-bold rounded-none uppercase transition-all tracking-wider text-[11px] flex items-center justify-center gap-2"
             >
-              Analyze Equity
+              RUN ANALYSIS
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </form>
+
+          {/* 2. Quick Search tags */}
+          <div className="mt-3 flex items-center gap-2 text-[10px] text-neutral-500">
+            <span>QUICK LINKS:</span>
+            <button onClick={() => setQuickSearch("Microsoft")} className="text-neutral-400 hover:text-white underline">MSFT</button>
+            <span>/</span>
+            <button onClick={() => setQuickSearch("Tesla")} className="text-neutral-400 hover:text-white underline">Tesla</button>
+            <span>/</span>
+            <button onClick={() => setQuickSearch("Apple")} className="text-neutral-400 hover:text-white underline">Apple</button>
+            <span>/</span>
+            <button onClick={() => setQuickSearch("Meta")} className="text-neutral-400 hover:text-white underline">Meta</button>
+          </div>
+
           {error && (
-            <div className="mt-4 p-3 rounded-lg bg-rose-950/40 border border-rose-900/50 text-rose-400 text-sm font-sans">
+            <div className="mt-4 p-3 border border-rose-900 bg-rose-950/20 text-rose-400 text-[11px]">
               {error}
             </div>
           )}
         </section>
 
-        {/* Audit / Feature Highlights Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
-          <div className="p-5 rounded-xl bg-neutral-900/20 border border-neutral-900">
-            <Cpu className="w-8 h-8 text-indigo-400 mb-3" />
-            <h3 className="font-semibold text-neutral-200">Parallel Research</h3>
-            <p className="text-xs text-neutral-500 mt-1">Concurrently fetching financials & Google news feeds to speed up compilation.</p>
+        {/* 3. Market Status / Agents Status Cards */}
+        <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="p-4 bg-[#090909] border border-[#1b1b1b] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-bold text-neutral-300">AI RESEARCH ENGINE</span>
+              <Cpu className="w-4 h-4 text-neutral-500" />
+            </div>
+            <div className="text-[10px] text-neutral-500 mt-2">
+              LangGraph State Machine orchestrating 7 specialist nodes.
+            </div>
+            <span className="text-[9px] text-[#00ff66] font-bold mt-4">SYSTEM READY</span>
           </div>
-          <div className="p-5 rounded-xl bg-neutral-900/20 border border-neutral-900">
-            <TrendingUp className="w-8 h-8 text-purple-400 mb-3" />
-            <h3 className="font-semibold text-neutral-200">Adversarial Debates</h3>
-            <p className="text-xs text-neutral-500 mt-1">Bull & Bear agents run opposing theses to reconcile risk vectors.</p>
+
+          <div className="p-4 bg-[#090909] border border-[#1b1b1b] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-bold text-neutral-300">FINANCIAL METRICS</span>
+              <BarChart2 className="w-4 h-4 text-neutral-500" />
+            </div>
+            <div className="text-[10px] text-neutral-500 mt-2">
+              Alpha Vantage interface feeding key valuations and ratios.
+            </div>
+            <span className="text-[9px] text-[#00ff66] font-bold mt-4">FEED ACTIVE</span>
           </div>
-          <div className="p-5 rounded-xl bg-neutral-900/20 border border-neutral-900">
-            <ShieldAlert className="w-8 h-8 text-rose-400 mb-3" />
-            <h3 className="font-semibold text-neutral-200">Self-Critique Audits</h3>
-            <p className="text-xs text-neutral-500 mt-1">Chief Risk Officer node rejects logical flaws or overconfident ratings.</p>
+
+          <div className="p-4 bg-[#090909] border border-[#1b1b1b] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-bold text-neutral-300">RISK VALIDATOR</span>
+              <ShieldAlert className="w-4 h-4 text-neutral-500" />
+            </div>
+            <div className="text-[10px] text-neutral-500 mt-2">
+              Chief Risk Officer auditing logic and flagging overconfidence loops.
+            </div>
+            <span className="text-[9px] text-[#00ff66] font-bold mt-4">CRO SECURED</span>
           </div>
-          <div className="p-5 rounded-xl bg-neutral-900/20 border border-neutral-900">
-            <Award className="w-8 h-8 text-emerald-400 mb-3" />
-            <h3 className="font-semibold text-neutral-200">Grounded Logic</h3>
-            <p className="text-xs text-neutral-500 mt-1">Strict type structures to avoid hallucinations and maintain math accuracy.</p>
+
+          <div className="p-4 bg-[#090909] border border-[#1b1b1b] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-bold text-neutral-300">MARKET SENTIMENT</span>
+              <Globe className="w-4 h-4 text-neutral-500" />
+            </div>
+            <div className="text-[10px] text-neutral-500 mt-2">
+              Tavily search scanner gathering media feeds and press releases.
+            </div>
+            <span className="text-[9px] text-[#00ff66] font-bold mt-4">SCANNERS ON</span>
           </div>
         </section>
 
         {/* History Table */}
-        <section className="mb-8">
-          <div className="flex items-center gap-2 mb-6">
-            <History className="w-5 h-5 text-neutral-400" />
-            <h2 className="text-2xl font-bold tracking-tight text-neutral-200">Research Archives</h2>
+        <section className="bg-[#090909] border border-[#1b1b1b]">
+          <div className="border-b border-[#1b1b1b] p-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <History className="w-4 h-4 text-neutral-400" />
+              <span className="font-bold text-neutral-200 tracking-wider">RESEARCH ARCHIVES & LOGS</span>
+            </div>
+            <span className="text-[10px] text-neutral-500">{history.length} RECORDS INDEXED</span>
           </div>
 
           {history.length === 0 ? (
-            <div className="text-center py-16 border border-dashed border-neutral-900 rounded-2xl bg-neutral-950">
-              <FileText className="w-12 h-12 text-neutral-800 mx-auto mb-3" />
-              <p className="text-neutral-500 text-sm">No analysis reports logged yet. Enter a query above to start.</p>
+            <div className="text-center py-16 text-neutral-600 uppercase">
+              No analysis records logged yet. Enter query above.
             </div>
           ) : (
-            <div className="border border-neutral-900 rounded-xl overflow-hidden bg-neutral-900/20 shadow-lg">
+            <div className="overflow-x-auto">
               <table className="w-full border-collapse text-left">
                 <thead>
-                  <tr className="border-b border-neutral-900 bg-neutral-950/60 text-xs font-mono uppercase text-neutral-500 tracking-wider">
-                    <th className="px-6 py-4">Company / Symbol</th>
-                    <th className="px-6 py-4">Decision Recommendation</th>
-                    <th className="px-6 py-4">Confidence Score</th>
-                    <th className="px-6 py-4">Executive Summary</th>
-                    <th className="px-6 py-4 text-right">Archived Date</th>
+                  <tr className="border-b border-[#1b1b1b] bg-[#070707] text-[10px] uppercase text-neutral-500 font-bold">
+                    <th className="px-4 py-3">Ticker / Symbol</th>
+                    <th className="px-4 py-3">Decision Verdict</th>
+                    <th className="px-4 py-3">Confidence</th>
+                    <th className="px-4 py-3">Executive Rationale</th>
+                    <th className="px-4 py-3 text-right">Archived Date</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-900 text-sm">
+                <tbody className="divide-y divide-[#1b1b1b] text-[11px]">
                   {history.map((item) => {
                     const recColor =
                       item.decision === "INVEST"
-                        ? "bg-emerald-950/40 text-emerald-400 border-emerald-900/50"
+                        ? "text-emerald-500"
                         : item.decision === "WATCH"
-                        ? "bg-amber-950/40 text-amber-400 border-amber-900/50"
-                        : "bg-rose-950/40 text-rose-400 border-rose-900/50";
+                        ? "text-amber-500"
+                        : "text-rose-500";
 
                     return (
                       <tr
                         key={item.id}
                         onClick={() => router.push(`/report/${item.id}`)}
-                        className="hover:bg-neutral-900/40 cursor-pointer transition-all"
+                        className="hover:bg-[#121212] cursor-pointer transition-all select-none"
                       >
-                        <td className="px-6 py-4">
-                          <div className="font-semibold text-neutral-200">{item.companyName}</div>
-                          <div className="text-xs text-neutral-500 font-mono mt-0.5">
+                        <td className="px-4 py-3.5">
+                          <div className="font-bold text-neutral-200 uppercase">{item.companyName}</div>
+                          <div className="text-[10px] text-neutral-500 font-mono mt-0.5">
                             {item.ticker} • {item.exchange}
                           </div>
                         </td>
-                        <td className="px-6 py-4">
-                          <span className={`px-2.5 py-0.5 rounded-full border text-xs font-semibold tracking-wide ${recColor}`}>
-                            {item.decision}
-                          </span>
+                        <td className="px-4 py-3.5 font-bold tracking-wider">
+                          <span className={recColor}>[{item.decision}]</span>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 py-3.5">
                           <div className="flex items-center gap-2">
-                            <div className="w-12 bg-neutral-900 rounded-full h-1 border border-neutral-850 overflow-hidden">
+                            <span className="font-mono text-neutral-300 font-semibold">{item.confidenceScore}%</span>
+                            <div className="w-16 bg-neutral-950 rounded-none h-1 border border-neutral-850 overflow-hidden">
                               <div
-                                className="bg-indigo-500 h-1 rounded-full"
+                                className="bg-neutral-400 h-1"
                                 style={{ width: `${item.confidenceScore}%` }}
                               ></div>
                             </div>
-                            <span className="font-mono text-neutral-300 font-semibold">{item.confidenceScore}%</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 max-w-xs truncate text-neutral-400">
+                        <td className="px-4 py-3.5 max-w-sm truncate text-neutral-400">
                           {item.summary}
                         </td>
-                        <td className="px-6 py-4 text-right font-mono text-neutral-500 text-xs">
+                        <td className="px-4 py-3.5 text-right font-mono text-neutral-500 text-[10px]">
                           {new Date(item.createdAt).toLocaleDateString(undefined, {
                             month: "short",
                             day: "numeric",
                             year: "numeric",
-                          })}
+                          }).toUpperCase()}
                         </td>
                       </tr>
                     );

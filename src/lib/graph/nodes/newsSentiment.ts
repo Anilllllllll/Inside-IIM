@@ -26,7 +26,7 @@ export async function newsSentimentNode(state: InvestIQState): Promise<Partial<I
   try {
     // 1. Fetch recent news via Tavily search
     searchRes = await performWebSearch(query, "basic");
-    citations = searchRes.results.map((r) => r.url);
+    citations = searchRes.results.map((r: any) => r.url);
 
     const model = getChatModel(0);
     

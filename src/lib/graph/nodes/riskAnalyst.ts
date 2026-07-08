@@ -26,7 +26,7 @@ export async function riskAnalystNode(state: InvestIQState): Promise<Partial<Inv
   try {
     // 1. Fetch risk vectors via Tavily search
     searchRes = await performWebSearch(query, "basic");
-    citations = searchRes.results.map((r) => r.url);
+    citations = searchRes.results.map((r: any) => r.url);
 
     const model = getChatModel(0);
     
