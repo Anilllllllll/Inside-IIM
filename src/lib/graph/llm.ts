@@ -10,9 +10,13 @@ export function getChatModel(temperature = 0, modelName = "gpt-4o-mini") {
 
   // Intercept Groq Keys
   if (apiKey.startsWith("gsk_")) {
-    console.log(`[LLM Client] Groq Key detected. Routing to Groq API using llama-3.3-70b-versatile...`);
+    const groqModel = modelName.includes("gpt-4o") && !modelName.includes("mini")
+      ? "llama-3.3-70b-versatile"
+      : "llama-3.1-8b-instant";
+
+    console.log(`[LLM Client] Groq Key detected. Routing to Groq API using ${groqModel} (mapped from ${modelName})...`);
     const client = new ChatOpenAI({
-      model: "llama-3.3-70b-versatile",
+      model: groqModel,
       temperature,
       apiKey,
       maxRetries: 2, // Fail fast under rate limits to trigger fallbacks
