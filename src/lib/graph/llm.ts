@@ -15,6 +15,7 @@ export function getChatModel(temperature = 0, modelName = "gpt-4o-mini") {
       model: "llama-3.3-70b-versatile",
       temperature,
       apiKey,
+      maxRetries: 2, // Fail fast under rate limits to trigger fallbacks
       configuration: {
         baseURL: "https://api.groq.com/openai/v1",
       },
@@ -36,6 +37,7 @@ export function getChatModel(temperature = 0, modelName = "gpt-4o-mini") {
     model: modelName,
     temperature,
     apiKey,
+    maxRetries: 2,
   });
 }
 export type InvestIQModel = ReturnType<typeof getChatModel>;
