@@ -83,10 +83,10 @@ export async function dbSaverNode(state: InvestIQState): Promise<Partial<InvestI
         decision: decision.recommendation,
         confidenceScore: decision.confidenceScore,
         summary: decision.reasoning,
-        fullReasoning: fullReasoning as any,
+        fullReasoning: JSON.stringify(fullReasoning),
         memoMarkdown: memo,
-        agentTrace: agentTrace as any,
-        sources: state.sources,
+        agentTrace: JSON.stringify(agentTrace),
+        sources: JSON.stringify(state.sources),
       },
     });
 

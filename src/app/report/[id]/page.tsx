@@ -84,6 +84,17 @@ export default function ReportDetailPage({ params }: { params: Promise<{ id: str
           throw new Error("Report not found in archives.");
         }
         const data = await res.json();
+        if (data) {
+          if (typeof data.sources === "string") {
+            try { data.sources = JSON.parse(data.sources); } catch (e) { data.sources = []; }
+          }
+          if (typeof data.fullReasoning === "string") {
+            try { data.fullReasoning = JSON.parse(data.fullReasoning); } catch (e) { data.fullReasoning = {}; }
+          }
+          if (typeof data.agentTrace === "string") {
+            try { data.agentTrace = JSON.parse(data.agentTrace); } catch (e) { data.agentTrace = {}; }
+          }
+        }
         setReport(data);
       } catch (err: any) {
         setError(err.message || "Failed to load report.");

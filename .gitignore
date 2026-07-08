@@ -3,6 +3,8 @@
 # dependencies
 node_modules/
 invest-iq-app/
+*.db
+*.db-journal
 /.pnp
 .pnp.*
 .yarn/*
