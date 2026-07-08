@@ -5,10 +5,10 @@ async function runTest() {
   console.log("InvestIQ Agent - Standalone Graph Test Runner");
   console.log("==================================================");
   
-  // Set dummy keys to trigger simulation flows
-  process.env.OPENAI_API_KEY = "your_openai_api_key";
-  process.env.ALPHA_VANTAGE_API_KEY = "your_alpha_vantage_api_key";
-  process.env.TAVILY_API_KEY = "your_tavily_api_key";
+  // Use env keys if present, otherwise set dummy keys to trigger simulation flows
+  if (!process.env.OPENAI_API_KEY) process.env.OPENAI_API_KEY = "your_openai_api_key";
+  if (!process.env.ALPHA_VANTAGE_API_KEY) process.env.ALPHA_VANTAGE_API_KEY = "your_alpha_vantage_api_key";
+  if (!process.env.TAVILY_API_KEY) process.env.TAVILY_API_KEY = "your_tavily_api_key";
   
   const query = "Tesla";
   console.log(`Executing multi-agent research workflow for query: "${query}"...`);
