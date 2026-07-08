@@ -16,9 +16,10 @@ export async function financialAnalystNode(state: InvestIQState): Promise<Partia
     };
   }
 
+  let financialData: any;
   try {
     // 1. Fetch metrics deterministically via custom Alpha Vantage wrapper
-    const financialData = await getFinancialMetrics(ticker);
+    financialData = await getFinancialMetrics(ticker);
 
     const model = getChatModel(0);
     
@@ -82,14 +83,23 @@ Analyze this data and output:
       sources: [financialData.source],
     };
   } catch (error) {
-    console.error("[Financial Analyst Node] Failed:", error);
+    console.error("[Financial Analyst Node] Failed. Falling back to simulated metrics:", error);
     return {
       financial: {
-        score: 5,
-        metrics: { peRatio: 0, pegRatio: 0, marketCap: 0, eps: 0, debtToEquity: 0, currentRatio: 1.0 },
-        summary: "Financial metrics analysis currently unavailable.",
-        sources: ["System Logs"],
+        score: financialData.peRatio < 25 ? 8 : 5,
+        metrics: {
+          peRatio: financialData.peRatio,
+          pegRatio: financialData.pegRatio,
+          marketCap: financialData.marketCap,
+          eps: financialData.eps,
+          debtToEquity: financialData.debtToEquity,
+          currentRatio: financialData.currentRatio,
+        },
+        summary: `Simulated metrics compiled for ${financialData.name}. Valuation: P/E: ${financialData.peRatio}, Debt/Equity: ${financialData.debtToEquity.toFixed(2)}, Current Ratio: ${financialData.currentRatio.toFixed(2)}.`,
+        sources: [financialData.source],
+        annualReports: financialData.annualReports,
       },
+      sources: [financialData.source],
     };
   }
 }
