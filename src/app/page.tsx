@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 
 import {
   TrendingUp, Cpu, ShieldCheck, Award, ArrowRight,
-  BarChart3
+  BarChart3, Sparkles, Target
 } from "lucide-react";
 
 const FEATURES = [
@@ -63,19 +62,14 @@ export default function Home() {
       >
         <div className="flex items-center gap-3">
           <div
-            className="w-10 h-10 rounded-xl overflow-hidden"
+            className="w-9 h-9 rounded-xl flex items-center justify-center"
             style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "linear-gradient(135deg, rgba(0,200,83,0.2), rgba(255,59,59,0.2))",
+              border: "1px solid rgba(0,200,83,0.3)",
+              fontSize: 18,
             }}
           >
-            <Image
-              src="/bull-bear-logo.png"
-              alt="InvestIQ Logo"
-              width={40}
-              height={40}
-              style={{ objectFit: "contain", width: "100%", height: "100%" }}
-            />
+            🐂
           </div>
           <div className="flex flex-col leading-none">
             <span style={{ fontSize: 16, fontWeight: 700, color: "#F0F2F1" }}>InvestIQ</span>
@@ -130,16 +124,18 @@ export default function Home() {
             }}
           />
 
-          {/* Logo Hero Image */}
-          <div className="mb-8">
-            <Image
-              src="/bull-bear-logo.png"
-              alt="Bull vs Bear — InvestIQ"
-              width={220}
-              height={160}
-              style={{ objectFit: "contain", filter: "drop-shadow(0 0 30px rgba(0,200,83,0.18))" }}
-              priority
-            />
+          {/* Badge */}
+          <div
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6"
+            style={{
+              background: "rgba(0,200,83,0.08)",
+              border: "1px solid rgba(0,200,83,0.2)",
+            }}
+          >
+            <Sparkles className="w-3.5 h-3.5" style={{ color: "#00C853" }} />
+            <span style={{ fontSize: 11, color: "#00C853", fontWeight: 600, letterSpacing: "0.1em" }}>
+              MULTI-AGENT AI · LANGGRAPH
+            </span>
           </div>
 
           {/* Headline */}
