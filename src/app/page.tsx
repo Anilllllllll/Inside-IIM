@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+
 import {
   TrendingUp, Cpu, ShieldCheck, Award, ArrowRight,
   BarChart3, Sparkles, Target
