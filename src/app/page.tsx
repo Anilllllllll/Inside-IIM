@@ -1,123 +1,306 @@
 import Link from "next/link";
-import { TrendingUp, Cpu, ShieldCheck, Award, ArrowRight } from "lucide-react";
+import {
+  TrendingUp, Cpu, ShieldCheck, Award, ArrowRight,
+  BarChart3, Sparkles, Target
+} from "lucide-react";
+
+const FEATURES = [
+  {
+    icon: Cpu,
+    title: "Parallel Specialists",
+    description:
+      "Financial, Sentiment, Competitive & Risk agents run concurrently — not sequentially. Faster, deeper research.",
+    color: "#00C853",
+  },
+  {
+    icon: TrendingUp,
+    title: "Adversarial Debate",
+    description:
+      "Bull vs Bear AI agents stress-test every investment thesis side-by-side before a verdict is issued.",
+    color: "#F5A623",
+  },
+  {
+    icon: ShieldCheck,
+    title: "CRO Audit Loop",
+    description:
+      "Chief Risk Officer node reviews final memo for overconfidence, contradictions, or logical flaws.",
+    color: "#FF3B3B",
+  },
+  {
+    icon: Award,
+    title: "Committee Verdict",
+    description:
+      "BUY / HOLD / PASS decision backed by typed structured outputs — zero hallucinations.",
+    color: "#00C853",
+  },
+];
+
+const STATS = [
+  { value: "7", label: "Specialist Agents" },
+  { value: "3", label: "Debate Rounds" },
+  { value: "60s", label: "Avg. Analysis Time" },
+  { value: "100%", label: "Grounded Outputs" },
+];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col justify-between font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
-      
-      {/* Top Header */}
-      <header className="border-b border-neutral-900 bg-neutral-950/80 backdrop-blur sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-gradient-to-tr from-indigo-500 via-purple-500 to-emerald-500 flex items-center justify-center font-bold text-white tracking-widest text-md shadow-[0_0_12px_rgba(99,102,241,0.4)]">
-              IQ
-            </div>
-            <span className="font-semibold tracking-wider text-lg bg-clip-text text-transparent bg-gradient-to-r from-neutral-100 to-neutral-400">
-              InvestIQ
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ background: "#050505", color: "#F0F2F1", fontFamily: "Inter, system-ui, sans-serif" }}
+    >
+      {/* ── NAV ── */}
+      <nav
+        className="sticky top-0 z-50 flex items-center justify-between px-6 h-[60px]"
+        style={{
+          background: "rgba(5,5,5,0.9)",
+          backdropFilter: "blur(20px)",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+        }}
+      >
+        <div className="flex items-center gap-3">
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center"
+            style={{
+              background: "linear-gradient(135deg, rgba(0,200,83,0.2), rgba(255,59,59,0.2))",
+              border: "1px solid rgba(0,200,83,0.3)",
+              fontSize: 18,
+            }}
+          >
+            🐂
+          </div>
+          <div className="flex flex-col leading-none">
+            <span style={{ fontSize: 16, fontWeight: 700, color: "#F0F2F1" }}>InvestIQ</span>
+            <span style={{ fontSize: 9, color: "#4A5C57", letterSpacing: "0.1em" }}>
+              AI POWERED INVESTMENT INTELLIGENCE
             </span>
           </div>
-          <Link
-            href="/dashboard"
-            className="text-xs font-semibold px-4 py-2 rounded-xl border border-neutral-800 text-neutral-300 hover:bg-neutral-900 transition-all font-mono"
-          >
-            LAUNCH TERMINAL
-          </Link>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <main className="flex-1 max-w-7xl mx-auto px-6 flex flex-col justify-center py-20">
-        
-        {/* Callout Badge */}
-        <div className="flex justify-center md:justify-start mb-6">
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/30 border border-indigo-900/50 text-indigo-400 text-xs font-semibold tracking-wider uppercase font-mono">
-            Stateful Multi-Agent Architecture
-          </div>
         </div>
 
-        {/* Hero Headlines */}
-        <div className="max-w-4xl text-center md:text-left mb-12">
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 via-neutral-100 to-neutral-500">
-            Next-Gen Investment Research Terminal
-          </h1>
-          <p className="text-neutral-400 text-lg md:text-xl mt-6 leading-relaxed max-w-2xl font-sans">
-            Stop relying on single-prompt LLM wrappers. InvestIQ runs parallel specialists, adversarial debate rounds, and self-critique audits to deliver grounded investment decisions.
-          </p>
-        </div>
-
-        {/* CTA Controls */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-20">
-          <Link
-            href="/dashboard"
-            className="h-14 px-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 font-semibold rounded-xl text-neutral-100 transition-all shadow-[0_4px_20px_rgba(99,102,241,0.25)] flex items-center justify-center gap-2 text-md"
-          >
-            Enter Terminal
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+        <div className="flex items-center gap-3">
           <a
             href="https://github.com/Anilllllllll/Inside-IIM"
             target="_blank"
             rel="noopener noreferrer"
-            className="h-14 px-8 bg-neutral-900 border border-neutral-800 hover:bg-neutral-850 font-semibold rounded-xl text-neutral-300 transition-all flex items-center justify-center gap-2 text-md"
+            style={{
+              fontSize: 13,
+              color: "#8B9A96",
+              padding: "7px 16px",
+              borderRadius: 8,
+              border: "1px solid rgba(255,255,255,0.07)",
+              textDecoration: "none",
+              transition: "all 0.2s",
+            }}
           >
-            View Code Repository
+            GitHub
           </a>
+          <Link
+            href="/dashboard"
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#050505",
+              background: "#00C853",
+              padding: "8px 20px",
+              borderRadius: 8,
+              textDecoration: "none",
+            }}
+          >
+            Open Terminal
+          </Link>
         </div>
+      </nav>
 
-        {/* Features Column Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-4 gap-8 border-t border-neutral-900 pt-16">
-          <div className="space-y-3">
-            <div className="w-10 h-10 rounded bg-indigo-950/40 border border-indigo-900/50 flex items-center justify-center text-indigo-400">
-              <Cpu className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-neutral-200 text-lg">Parallel Specialists</h3>
-            <p className="text-sm text-neutral-500 leading-relaxed">
-              Fanning out research to parallel financial, sentiment, competitive, and risk analysts to cut latency and prevent context windows overload.
-            </p>
+      {/* ── HERO ── */}
+      <main className="flex-1 flex flex-col">
+        <section className="flex flex-col items-center justify-center text-center px-4 pt-20 pb-16 relative overflow-hidden">
+          {/* Background glow */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse 800px 400px at 50% 0%, rgba(0,200,83,0.06) 0%, transparent 70%)",
+            }}
+          />
+
+          {/* Badge */}
+          <div
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6"
+            style={{
+              background: "rgba(0,200,83,0.08)",
+              border: "1px solid rgba(0,200,83,0.2)",
+            }}
+          >
+            <Sparkles className="w-3.5 h-3.5" style={{ color: "#00C853" }} />
+            <span style={{ fontSize: 11, color: "#00C853", fontWeight: 600, letterSpacing: "0.1em" }}>
+              MULTI-AGENT AI · LANGGRAPH
+            </span>
           </div>
 
-          <div className="space-y-3">
-            <div className="w-10 h-10 rounded bg-purple-950/40 border border-purple-900/50 flex items-center justify-center text-purple-400">
-              <TrendingUp className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-neutral-200 text-lg">Adversarial Debate</h3>
-            <p className="text-sm text-neutral-500 leading-relaxed">
-              Pitting Bull and Bear case agents side-by-side to stress-test assumptions and find vulnerabilities. Reconciled by a referee node.
-            </p>
+          {/* Headline */}
+          <h1
+            className="font-bold"
+            style={{
+              fontSize: "clamp(36px, 6vw, 68px)",
+              color: "#F0F2F1",
+              lineHeight: 1.08,
+              letterSpacing: "-0.03em",
+              maxWidth: 800,
+              marginBottom: 20,
+            }}
+          >
+            AI Investment
+            <br />
+            <span
+              style={{
+                background: "linear-gradient(135deg, #00C853 0%, #69F0AE 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Research Agent
+            </span>
+          </h1>
+
+          <p
+            style={{
+              fontSize: "clamp(14px, 2vw, 17px)",
+              color: "#8B9A96",
+              maxWidth: 560,
+              lineHeight: 1.65,
+              marginBottom: 36,
+            }}
+          >
+            Multi-agent AI system that researches companies, analyzes risk, runs
+            adversarial Bull vs Bear debates, and generates professional investment decisions.
+          </p>
+
+          {/* CTA buttons */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 mb-16">
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-2 font-semibold rounded-xl transition-all"
+              style={{
+                background: "#00C853",
+                color: "#050505",
+                padding: "13px 28px",
+                fontSize: 15,
+                borderRadius: 12,
+                textDecoration: "none",
+              }}
+            >
+              Start Analysis
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <a
+              href="https://github.com/Anilllllllll/Inside-IIM"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 font-medium rounded-xl"
+              style={{
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#8B9A96",
+                padding: "13px 28px",
+                fontSize: 15,
+                borderRadius: 12,
+                textDecoration: "none",
+                background: "rgba(255,255,255,0.03)",
+              }}
+            >
+              View on GitHub
+            </a>
           </div>
 
-          <div className="space-y-3">
-            <div className="w-10 h-10 rounded bg-rose-950/40 border border-rose-900/50 flex items-center justify-center text-rose-400">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-neutral-200 text-lg">Self-Correction Audit</h3>
-            <p className="text-sm text-neutral-500 leading-relaxed">
-              CRO validator node inspects the final memo for contradictions or overconfidence. Capped loop recursion retry protects your token costs.
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            <div className="w-10 h-10 rounded bg-emerald-950/40 border border-emerald-900/50 flex items-center justify-center text-emerald-400">
-              <Award className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-neutral-200 text-lg">100% Math Accuracy</h3>
-            <p className="text-sm text-neutral-500 leading-relaxed">
-              All margin calculations and debt ratios computed deterministically in TypeScript, avoiding standard LLM mathematical hallucinations.
-            </p>
+          {/* Stats row */}
+          <div className="flex flex-wrap items-center justify-center gap-8">
+            {STATS.map((s) => (
+              <div key={s.label} className="text-center">
+                <div
+                  style={{
+                    fontSize: "clamp(22px, 3vw, 30px)",
+                    fontWeight: 800,
+                    color: "#00C853",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1,
+                  }}
+                >
+                  {s.value}
+                </div>
+                <div style={{ fontSize: 12, color: "#4A5C57", marginTop: 4 }}>
+                  {s.label}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
+        {/* ── FEATURES ── */}
+        <section className="max-w-6xl mx-auto px-4 pb-20 w-full">
+          <div className="text-center mb-10">
+            <h2
+              style={{
+                fontSize: "clamp(24px, 3.5vw, 36px)",
+                fontWeight: 800,
+                color: "#F0F2F1",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Research-grade AI pipeline
+            </h2>
+            <p style={{ fontSize: 14, color: "#4A5C57", marginTop: 8 }}>
+              Not a single-prompt LLM wrapper — a proper multi-agent state machine.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {FEATURES.map((f) => (
+              <div
+                key={f.title}
+                className="rounded-2xl p-6"
+                style={{
+                  background: "#0B0F0E",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = `${f.color}30`;
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                  style={{
+                    background: `${f.color}15`,
+                    border: `1px solid ${f.color}30`,
+                  }}
+                >
+                  <f.icon className="w-5 h-5" style={{ color: f.color }} />
+                </div>
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: "#F0F2F1", marginBottom: 8 }}>
+                  {f.title}
+                </h3>
+                <p style={{ fontSize: 13, color: "#4A5C57", lineHeight: 1.6 }}>
+                  {f.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-neutral-900 py-6 bg-neutral-950/60 print:hidden">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-neutral-600 text-xs font-mono gap-4">
-          <span>© 2026 InvestIQ Agent Platform. All rights reserved.</span>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-neutral-400">Terms of Service</a>
-            <a href="#" className="hover:text-neutral-400">Privacy Policy</a>
-          </div>
-        </div>
+      {/* ── FOOTER ── */}
+      <footer
+        className="flex items-center justify-between px-6 py-4"
+        style={{
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          fontSize: 12,
+          color: "#4A5C57",
+        }}
+      >
+        <span>© 2025 InvestIQ — AI Investment Intelligence</span>
+        <span>Built with LangGraph · Next.js · Supabase</span>
       </footer>
     </div>
   );

@@ -1,185 +1,254 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Terminal, Cpu, ShieldAlert, Check, Play, AlertCircle } from "lucide-react";
+import {
+  Building2, BarChart3, Newspaper, Swords, ShieldAlert, Gavel, Database, Check
+} from "lucide-react";
 
-interface Step {
+interface AgentStep {
   id: string;
   name: string;
   description: string;
-  agent: string;
-  code: string;
+  icon: React.ReactNode;
+  durationMs: number;
 }
 
-const STEPS: Step[] = [
+const STEPS: AgentStep[] = [
   {
     id: "resolver",
-    name: "Entity Resolver",
-    description: "Resolving query to primary listed stock symbol...",
-    agent: "RESOLVER_NODE",
-    code: "SEC_RESOLVE_TICKER",
+    name: "Company Research Agent",
+    description: "Resolving ticker & understanding business model",
+    icon: <Building2 className="w-5 h-5" />,
+    durationMs: 4000,
   },
   {
     id: "financial",
-    name: "Financial Data Collection",
-    description: "Scraping key balance sheets, metrics, and ratios...",
-    agent: "FUNDAMENTAL_NODE",
-    code: "DATA_PULL_RATIOS",
+    name: "Financial Analysis Agent",
+    description: "Pulling key ratios: P/E, Debt/Equity, Growth metrics",
+    icon: <BarChart3 className="w-5 h-5" />,
+    durationMs: 5000,
   },
   {
     id: "news",
-    name: "News Intelligence",
-    description: "Scanning live media headlines and scraping Tavily feeds...",
-    agent: "SENTIMENT_NODE",
-    code: "SENTIMENT_SCAN_MEDIA",
+    name: "Market Sentiment Agent",
+    description: "Scanning latest news signals & media sentiment",
+    icon: <Newspaper className="w-5 h-5" />,
+    durationMs: 4500,
   },
   {
     id: "debate",
     name: "Bull vs Bear Debate",
-    description: "Pitting Growth (Bull) vs Short-Seller (Bear) cases...",
-    agent: "DEBATE_ARBITRATOR",
-    code: "ADVERSARIAL_THESIS_RUN",
+    description: "Adversarial agents stress-testing the investment thesis",
+    icon: <Swords className="w-5 h-5" />,
+    durationMs: 5000,
   },
   {
     id: "risk",
-    name: "Risk Committee",
-    description: "CRO node auditing logical consistency and credit limits...",
-    agent: "CRO_QUALITY_CONTROL",
-    code: "CRO_COMPLIANCE_AUDIT",
+    name: "Risk Committee Agent",
+    description: "Evaluating downside risk vectors & CRO audit",
+    icon: <ShieldAlert className="w-5 h-5" />,
+    durationMs: 4000,
   },
   {
     id: "decision",
-    name: "Final Investment Decision",
-    description: "Compiling committee memo and formatting research dossier...",
-    agent: "DECISION_NODE",
-    code: "MEMO_COMPILATION_DONE",
+    name: "Investment Committee",
+    description: "Generating final investment verdict & research memo",
+    icon: <Gavel className="w-5 h-5" />,
+    durationMs: 4500,
+  },
+  {
+    id: "saving",
+    name: "Archiving Results",
+    description: "Saving dossier to secure database",
+    icon: <Database className="w-5 h-5" />,
+    durationMs: 3000,
   },
 ];
 
 export function LiveWorkflow() {
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [logs, setLogs] = useState<string[]>([]);
+  const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
-    // Set initial log
-    setLogs([
-      `[${new Date().toLocaleTimeString()}] INIT: Launching InvestIQ Multi-Agent Workflow...`,
-      `[${new Date().toLocaleTimeString()}] RESOLVER_NODE: Listening for request payload...`,
-    ]);
-
     const interval = setInterval(() => {
-      setCurrentStepIndex((prev) => {
-        if (prev < STEPS.length - 1) {
-          const nextIndex = prev + 1;
-          const nextStep = STEPS[nextIndex];
-          
-          setLogs((prevLogs) => [
-            ...prevLogs,
-            `[${new Date().toLocaleTimeString()}] ${STEPS[prev].agent}: Completed ${STEPS[prev].code} successfully.`,
-            `[${new Date().toLocaleTimeString()}] ${nextStep.agent}: Launching ${nextStep.code}...`,
-          ]);
-          
-          return nextIndex;
-        }
+      setCurrentStep((prev) => {
+        if (prev < STEPS.length - 1) return prev + 1;
         return prev;
       });
-    }, 4000); // 4 seconds per node
-
+    }, 4200);
     return () => clearInterval(interval);
   }, []);
 
+  const progress = Math.round(((currentStep + 1) / STEPS.length) * 100);
+
   return (
-    <div className="w-full max-w-2xl mx-auto bg-[#0a0a0a] border border-[#1f1f1f] shadow-2xl p-6 font-mono text-xs text-neutral-300">
-      
-      {/* Terminal Title Bar */}
-      <div className="flex items-center justify-between border-b border-[#1f1f1f] pb-4 mb-6">
-        <div className="flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-emerald-500" />
-          <span className="font-bold tracking-wider text-neutral-200">AI ANALYST DESK v1.2</span>
+    <div className="w-full max-w-lg mx-auto px-4">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-4"
+          style={{
+            background: "rgba(0,200,83,0.08)",
+            border: "1px solid rgba(0,200,83,0.2)",
+          }}
+        >
+          <span
+            className="w-2 h-2 rounded-full pulse-dot"
+            style={{ background: "#00C853" }}
+          />
+          <span style={{ fontSize: 11, color: "#00C853", fontWeight: 600, letterSpacing: "0.1em" }}>
+            RESEARCH IN PROGRESS
+          </span>
         </div>
-        <div className="flex items-center gap-2 text-[10px] text-emerald-400">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse block"></span>
-          <span>PIPELINE RUNNING</span>
-        </div>
+
+        <h2
+          className="font-bold"
+          style={{ fontSize: 22, color: "#F0F2F1", letterSpacing: "-0.02em" }}
+        >
+          AI Analyst Desk
+        </h2>
+        <p style={{ fontSize: 13, color: "#4A5C57", marginTop: 6 }}>
+          Multi-agent pipeline running — takes ~60–90 seconds
+        </p>
       </div>
 
-      {/* Header Info */}
-      <div className="mb-6 bg-[#070707] border border-[#151515] p-3 text-[11px] text-neutral-400 space-y-1">
-        <div>SYSTEM: Stateful Multi-Agent LangGraph Machine</div>
-        <div>THREAD: RESEARCH_PROCESSOR_ID_{Math.random().toString(36).slice(2, 8).toUpperCase()}</div>
-        <div>METRICS: 7 Specialists • Dynamic Fallbacks Enabled</div>
-      </div>
-
-      {/* Pipeline Steps Grid */}
-      <div className="space-y-3 mb-6">
+      {/* Agent Cards */}
+      <div className="space-y-2 mb-8">
         {STEPS.map((step, index) => {
-          const isActive = index === currentStepIndex;
-          const isCompleted = index < currentStepIndex;
-          const isPending = index > currentStepIndex;
-
-          let statusText = "PENDING";
-          let statusColor = "text-neutral-600 border-neutral-800";
-          if (isActive) {
-            statusText = "RUNNING";
-            statusColor = "text-amber-500 border-amber-900/50 bg-amber-950/20";
-          } else if (isCompleted) {
-            statusText = "OK";
-            statusColor = "text-emerald-500 border-emerald-900/50 bg-emerald-950/20";
-          }
+          const isCompleted = index < currentStep;
+          const isActive = index === currentStep;
+          const isPending = index > currentStep;
 
           return (
             <div
               key={step.id}
-              className={`border p-3 flex flex-col md:flex-row md:items-center justify-between gap-2 transition-all ${
-                isActive
-                  ? "border-neutral-700 bg-neutral-900/30"
-                  : "border-[#151515] bg-[#070707]/30 opacity-70"
-              }`}
+              className="flex items-center gap-4 rounded-xl transition-all duration-500"
+              style={{
+                padding: "14px 16px",
+                background: isActive
+                  ? "rgba(0,200,83,0.06)"
+                  : isCompleted
+                  ? "rgba(255,255,255,0.02)"
+                  : "transparent",
+                border: isActive
+                  ? "1px solid rgba(0,200,83,0.2)"
+                  : "1px solid rgba(255,255,255,0.04)",
+                opacity: isPending ? 0.35 : 1,
+                transform: isActive ? "scale(1.01)" : "scale(1)",
+              }}
             >
-              <div className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded border border-[#1f1f1f] flex items-center justify-center bg-[#070707]">
-                  {isCompleted ? (
-                    <Check className="w-3.5 h-3.5 text-emerald-500" />
-                  ) : isActive ? (
-                    <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
-                  ) : (
-                    <span className="text-[9px] text-neutral-600">{index + 1}</span>
-                  )}
-                </div>
-                <div>
-                  <div className="font-semibold text-neutral-200">{step.name}</div>
-                  {isActive && <div className="text-[10px] text-neutral-400 mt-0.5">{step.description}</div>}
-                </div>
+              {/* Icon / Status circle */}
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{
+                  background: isCompleted
+                    ? "rgba(0,200,83,0.15)"
+                    : isActive
+                    ? "rgba(0,200,83,0.08)"
+                    : "rgba(255,255,255,0.03)",
+                  border: isCompleted
+                    ? "1px solid rgba(0,200,83,0.35)"
+                    : isActive
+                    ? "1px solid rgba(0,200,83,0.2)"
+                    : "1px solid rgba(255,255,255,0.06)",
+                  color: isCompleted ? "#00C853" : isActive ? "#00C853" : "#4A5C57",
+                }}
+              >
+                {isCompleted ? (
+                  <Check className="w-5 h-5" />
+                ) : (
+                  <span
+                    style={{
+                      opacity: isActive ? 1 : 0.5,
+                      animation: isActive ? "pulse-dot 2s infinite" : "none",
+                    }}
+                  >
+                    {step.icon}
+                  </span>
+                )}
               </div>
 
-              <div className="flex items-center gap-2">
-                <span className="text-[9px] text-neutral-500 uppercase px-1.5 py-0.5 rounded bg-neutral-900 border border-neutral-800">
-                  {step.agent}
-                </span>
-                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${statusColor}`}>
-                  {statusText}
-                </span>
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <div
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: isCompleted ? "#8B9A96" : isActive ? "#F0F2F1" : "#4A5C57",
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  {step.name}
+                </div>
+                {isActive && (
+                  <div
+                    className="fade-slide-in"
+                    style={{ fontSize: 12, color: "#4A5C57", marginTop: 2 }}
+                  >
+                    {step.description}
+                  </div>
+                )}
+              </div>
+
+              {/* Status tag */}
+              <div
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                  padding: "3px 8px",
+                  borderRadius: 4,
+                  background: isCompleted
+                    ? "rgba(0,200,83,0.1)"
+                    : isActive
+                    ? "rgba(245,166,35,0.1)"
+                    : "transparent",
+                  color: isCompleted ? "#00C853" : isActive ? "#F5A623" : "#4A5C57",
+                  border: isCompleted
+                    ? "1px solid rgba(0,200,83,0.2)"
+                    : isActive
+                    ? "1px solid rgba(245,166,35,0.2)"
+                    : "none",
+                }}
+              >
+                {isCompleted ? "DONE" : isActive ? "RUNNING" : "QUEUED"}
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Mini Progress Bar */}
-      <div className="w-full bg-[#070707] rounded-none h-1.5 border border-[#1f1f1f] mb-6 overflow-hidden">
+      {/* Progress Bar */}
+      <div>
+        <div className="flex justify-between items-center mb-2">
+          <span style={{ fontSize: 11, color: "#4A5C57", fontWeight: 500 }}>
+            Research Progress
+          </span>
+          <span style={{ fontSize: 11, color: "#00C853", fontWeight: 700 }}>
+            {progress}%
+          </span>
+        </div>
         <div
-          className="bg-emerald-500 h-1 rounded-none transition-all duration-700"
-          style={{ width: `${((currentStepIndex + 1) / STEPS.length) * 100}%` }}
-        ></div>
-      </div>
-
-      {/* Terminal Live logs */}
-      <div className="border border-[#1f1f1f] bg-[#050505] p-3 rounded-none h-28 overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-800 font-mono text-[10px] text-neutral-500 space-y-1">
-        {logs.map((log, i) => (
-          <div key={i} className={i === logs.length - 1 ? "text-neutral-400" : ""}>
-            {log}
-          </div>
-        ))}
+          className="w-full rounded-full overflow-hidden"
+          style={{
+            height: 4,
+            background: "rgba(255,255,255,0.05)",
+          }}
+        >
+          <div
+            className="h-full rounded-full transition-all duration-700"
+            style={{
+              width: `${progress}%`,
+              background: "linear-gradient(90deg, #00C853, #00E676)",
+              boxShadow: "0 0 8px rgba(0,200,83,0.4)",
+            }}
+          />
+        </div>
+        <p
+          className="text-center mt-4"
+          style={{ fontSize: 11, color: "#4A5C57" }}
+        >
+          Step {currentStep + 1} of {STEPS.length} — {STEPS[currentStep].name}
+        </p>
       </div>
     </div>
   );
