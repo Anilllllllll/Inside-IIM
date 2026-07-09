@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { TrendingUp, TrendingDown, User, Bell, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import { TrendingUp, TrendingDown, User } from "lucide-react";
 
 const TICKERS = [
   { symbol: "AAPL", change: "+1.24%", up: true },
@@ -43,13 +44,19 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/dashboard" className="flex items-center gap-3 group">
           <div
-            className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden"
+            className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center"
             style={{
-              background: "linear-gradient(135deg, rgba(0,200,83,0.2), rgba(255,59,59,0.2))",
-              border: "1px solid rgba(0,200,83,0.3)",
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.08)",
             }}
           >
-            <span style={{ fontSize: 18 }}>🐂</span>
+            <Image
+              src="/bull-bear-logo.png"
+              alt="InvestIQ Logo"
+              width={40}
+              height={40}
+              style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            />
           </div>
           <div className="flex flex-col leading-none">
             <span
