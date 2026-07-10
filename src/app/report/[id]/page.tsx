@@ -224,7 +224,7 @@ export default function ReportDetailPage({ params }: { params: Promise<{ id: str
         <div style={{ ...cardStyle, marginBottom: 20 }}>
           <div
             style={{
-              height: 4, borderRadius: "20px 20px 0 0", marginBottom: 24,
+              height: 4,
               background: "linear-gradient(90deg, #7C3AED, #6366F1, #16A34A)",
               margin: "-24px -24px 24px -24px",
               borderRadius: "24px 24px 0 0",
