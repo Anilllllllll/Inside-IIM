@@ -10,58 +10,50 @@ interface AgentStep {
   name: string;
   description: string;
   icon: React.ReactNode;
-  durationMs: number;
 }
 
 const STEPS: AgentStep[] = [
   {
     id: "resolver",
     name: "Company Research Agent",
-    description: "Resolving ticker & understanding business model",
-    icon: <Building2 className="w-5 h-5" />,
-    durationMs: 4000,
+    description: "Resolving ticker & understanding the business model",
+    icon: <Building2 style={{ width: 18, height: 18 }} />,
   },
   {
     id: "financial",
     name: "Financial Analysis Agent",
-    description: "Pulling key ratios: P/E, Debt/Equity, Growth metrics",
-    icon: <BarChart3 className="w-5 h-5" />,
-    durationMs: 5000,
+    description: "Pulling key ratios: P/E, Debt/Equity, growth metrics",
+    icon: <BarChart3 style={{ width: 18, height: 18 }} />,
   },
   {
     id: "news",
     name: "Market Sentiment Agent",
-    description: "Scanning latest news signals & media sentiment",
-    icon: <Newspaper className="w-5 h-5" />,
-    durationMs: 4500,
+    description: "Scanning latest news and media sentiment signals",
+    icon: <Newspaper style={{ width: 18, height: 18 }} />,
   },
   {
     id: "debate",
     name: "Bull vs Bear Debate",
     description: "Adversarial agents stress-testing the investment thesis",
-    icon: <Swords className="w-5 h-5" />,
-    durationMs: 5000,
+    icon: <Swords style={{ width: 18, height: 18 }} />,
   },
   {
     id: "risk",
     name: "Risk Committee Agent",
-    description: "Evaluating downside risk vectors & CRO audit",
-    icon: <ShieldAlert className="w-5 h-5" />,
-    durationMs: 4000,
+    description: "Evaluating downside vectors & running CRO audit",
+    icon: <ShieldAlert style={{ width: 18, height: 18 }} />,
   },
   {
     id: "decision",
     name: "Investment Committee",
-    description: "Generating final investment verdict & research memo",
-    icon: <Gavel className="w-5 h-5" />,
-    durationMs: 4500,
+    description: "Generating final investment verdict and research memo",
+    icon: <Gavel style={{ width: 18, height: 18 }} />,
   },
   {
     id: "saving",
     name: "Archiving Results",
     description: "Saving dossier to secure database",
-    icon: <Database className="w-5 h-5" />,
-    durationMs: 3000,
+    icon: <Database style={{ width: 18, height: 18 }} />,
   },
 ];
 
@@ -70,10 +62,7 @@ export function LiveWorkflow() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentStep((prev) => {
-        if (prev < STEPS.length - 1) return prev + 1;
-        return prev;
-      });
+      setCurrentStep((prev) => (prev < STEPS.length - 1 ? prev + 1 : prev));
     }, 4200);
     return () => clearInterval(interval);
   }, []);
@@ -82,37 +71,46 @@ export function LiveWorkflow() {
 
   return (
     <div className="w-full max-w-lg mx-auto px-4">
+
       {/* Header */}
       <div className="text-center mb-8">
         <div
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-4"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5"
           style={{
-            background: "rgba(0,200,83,0.08)",
-            border: "1px solid rgba(0,200,83,0.2)",
+            background: "rgba(124, 58, 237, 0.08)",
+            border: "1px solid rgba(124, 58, 237, 0.2)",
           }}
         >
           <span
-            className="w-2 h-2 rounded-full pulse-dot"
-            style={{ background: "#00C853" }}
+            className="w-2 h-2 rounded-full"
+            style={{
+              background: "#7C3AED",
+              animation: "pulse-ring 2.5s ease-in-out infinite",
+              display: "inline-block",
+            }}
           />
-          <span style={{ fontSize: 11, color: "#00C853", fontWeight: 600, letterSpacing: "0.1em" }}>
-            RESEARCH IN PROGRESS
+          <span style={{ fontSize: 11, color: "#7C3AED", fontWeight: 700, letterSpacing: "0.1em" }}>
+            AI RESEARCH IN PROGRESS
           </span>
         </div>
 
         <h2
-          className="font-bold"
-          style={{ fontSize: 22, color: "#F0F2F1", letterSpacing: "-0.02em" }}
+          style={{
+            fontSize: 24,
+            fontWeight: 800,
+            color: "#111827",
+            letterSpacing: "-0.02em",
+          }}
         >
-          AI Analyst Desk
+          Analyst Desk Running
         </h2>
-        <p style={{ fontSize: 13, color: "#4A5C57", marginTop: 6 }}>
-          Multi-agent pipeline running — takes ~60–90 seconds
+        <p style={{ fontSize: 13, color: "#9CA3AF", marginTop: 6 }}>
+          Multi-agent pipeline active — takes ~60–90 seconds
         </p>
       </div>
 
       {/* Agent Cards */}
-      <div className="space-y-2 mb-8">
+      <div className="space-y-2.5 mb-8">
         {STEPS.map((step, index) => {
           const isCompleted = index < currentStep;
           const isActive = index === currentStep;
@@ -121,49 +119,49 @@ export function LiveWorkflow() {
           return (
             <div
               key={step.id}
-              className="flex items-center gap-4 rounded-xl transition-all duration-500"
+              className="flex items-center gap-4 rounded-2xl transition-all duration-500"
               style={{
-                padding: "14px 16px",
+                padding: "14px 18px",
                 background: isActive
-                  ? "rgba(0,200,83,0.06)"
+                  ? "rgba(255,255,255,0.95)"
                   : isCompleted
-                  ? "rgba(255,255,255,0.02)"
-                  : "transparent",
+                  ? "rgba(255,255,255,0.7)"
+                  : "rgba(255,255,255,0.4)",
                 border: isActive
-                  ? "1px solid rgba(0,200,83,0.2)"
-                  : "1px solid rgba(255,255,255,0.04)",
-                opacity: isPending ? 0.35 : 1,
+                  ? "1.5px solid rgba(124, 58, 237, 0.35)"
+                  : isCompleted
+                  ? "1px solid rgba(22, 163, 74, 0.2)"
+                  : "1px solid rgba(0,0,0,0.06)",
+                boxShadow: isActive
+                  ? "0 4px 20px rgba(124, 58, 237, 0.12), 0 0 0 3px rgba(124,58,237,0.06)"
+                  : isCompleted
+                  ? "0 1px 6px rgba(0,0,0,0.05)"
+                  : "none",
+                opacity: isPending ? 0.45 : 1,
                 transform: isActive ? "scale(1.01)" : "scale(1)",
               }}
             >
-              {/* Icon / Status circle */}
+              {/* Icon */}
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                 style={{
                   background: isCompleted
-                    ? "rgba(0,200,83,0.15)"
+                    ? "linear-gradient(135deg, #16A34A, #059669)"
                     : isActive
-                    ? "rgba(0,200,83,0.08)"
-                    : "rgba(255,255,255,0.03)",
-                  border: isCompleted
-                    ? "1px solid rgba(0,200,83,0.35)"
-                    : isActive
-                    ? "1px solid rgba(0,200,83,0.2)"
-                    : "1px solid rgba(255,255,255,0.06)",
-                  color: isCompleted ? "#00C853" : isActive ? "#00C853" : "#4A5C57",
+                    ? "linear-gradient(135deg, #7C3AED, #6366F1)"
+                    : "rgba(0,0,0,0.04)",
+                  color: isCompleted || isActive ? "white" : "#9CA3AF",
+                  boxShadow: isActive
+                    ? "0 4px 12px rgba(124,58,237,0.3)"
+                    : isCompleted
+                    ? "0 4px 12px rgba(22,163,74,0.25)"
+                    : "none",
                 }}
               >
                 {isCompleted ? (
-                  <Check className="w-5 h-5" />
+                  <Check style={{ width: 18, height: 18 }} />
                 ) : (
-                  <span
-                    style={{
-                      opacity: isActive ? 1 : 0.5,
-                      animation: isActive ? "pulse-dot 2s infinite" : "none",
-                    }}
-                  >
-                    {step.icon}
-                  </span>
+                  step.icon
                 )}
               </div>
 
@@ -173,7 +171,7 @@ export function LiveWorkflow() {
                   style={{
                     fontSize: 14,
                     fontWeight: 600,
-                    color: isCompleted ? "#8B9A96" : isActive ? "#F0F2F1" : "#4A5C57",
+                    color: isCompleted ? "#6B7280" : isActive ? "#111827" : "#9CA3AF",
                     letterSpacing: "-0.01em",
                   }}
                 >
@@ -181,33 +179,38 @@ export function LiveWorkflow() {
                 </div>
                 {isActive && (
                   <div
-                    className="fade-slide-in"
-                    style={{ fontSize: 12, color: "#4A5C57", marginTop: 2 }}
+                    className="fade-up"
+                    style={{ fontSize: 12, color: "#7C3AED", marginTop: 2, fontWeight: 500 }}
                   >
                     {step.description}
                   </div>
                 )}
+                {isCompleted && (
+                  <div style={{ fontSize: 11, color: "#16A34A", marginTop: 1, fontWeight: 500 }}>
+                    Completed
+                  </div>
+                )}
               </div>
 
-              {/* Status tag */}
+              {/* Status badge */}
               <div
                 style={{
                   fontSize: 10,
                   fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  padding: "3px 8px",
-                  borderRadius: 4,
+                  letterSpacing: "0.07em",
+                  padding: "4px 10px",
+                  borderRadius: 20,
                   background: isCompleted
-                    ? "rgba(0,200,83,0.1)"
+                    ? "rgba(22, 163, 74, 0.1)"
                     : isActive
-                    ? "rgba(245,166,35,0.1)"
-                    : "transparent",
-                  color: isCompleted ? "#00C853" : isActive ? "#F5A623" : "#4A5C57",
+                    ? "rgba(124, 58, 237, 0.1)"
+                    : "rgba(0,0,0,0.04)",
+                  color: isCompleted ? "#16A34A" : isActive ? "#7C3AED" : "#9CA3AF",
                   border: isCompleted
-                    ? "1px solid rgba(0,200,83,0.2)"
+                    ? "1px solid rgba(22,163,74,0.2)"
                     : isActive
-                    ? "1px solid rgba(245,166,35,0.2)"
-                    : "none",
+                    ? "1px solid rgba(124,58,237,0.2)"
+                    : "1px solid transparent",
                 }}
               >
                 {isCompleted ? "DONE" : isActive ? "RUNNING" : "QUEUED"}
@@ -218,36 +221,43 @@ export function LiveWorkflow() {
       </div>
 
       {/* Progress Bar */}
-      <div>
-        <div className="flex justify-between items-center mb-2">
-          <span style={{ fontSize: 11, color: "#4A5C57", fontWeight: 500 }}>
+      <div
+        className="rounded-2xl p-5"
+        style={{
+          background: "rgba(255,255,255,0.9)",
+          border: "1px solid rgba(0,0,0,0.07)",
+          boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+        }}
+      >
+        <div className="flex justify-between items-center mb-3">
+          <span style={{ fontSize: 13, color: "#4B5563", fontWeight: 600 }}>
             Research Progress
           </span>
-          <span style={{ fontSize: 11, color: "#00C853", fontWeight: 700 }}>
+          <span
+            style={{
+              fontSize: 13,
+              fontWeight: 800,
+              color: "#7C3AED",
+            }}
+          >
             {progress}%
           </span>
         </div>
         <div
           className="w-full rounded-full overflow-hidden"
-          style={{
-            height: 4,
-            background: "rgba(255,255,255,0.05)",
-          }}
+          style={{ height: 8, background: "rgba(124,58,237,0.08)" }}
         >
           <div
             className="h-full rounded-full transition-all duration-700"
             style={{
               width: `${progress}%`,
-              background: "linear-gradient(90deg, #00C853, #00E676)",
-              boxShadow: "0 0 8px rgba(0,200,83,0.4)",
+              background: "linear-gradient(90deg, #7C3AED, #6366F1)",
+              boxShadow: "0 0 10px rgba(124,58,237,0.3)",
             }}
           />
         </div>
-        <p
-          className="text-center mt-4"
-          style={{ fontSize: 11, color: "#4A5C57" }}
-        >
-          Step {currentStep + 1} of {STEPS.length} — {STEPS[currentStep].name}
+        <p className="text-center mt-3" style={{ fontSize: 12, color: "#9CA3AF" }}>
+          Step {currentStep + 1} of {STEPS.length} — {STEPS[currentStep]?.name}
         </p>
       </div>
     </div>

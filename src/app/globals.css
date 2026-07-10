@@ -1,36 +1,63 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
-
 /* ================================================
-   DESIGN TOKENS
+   LIGHT FINTECH DESIGN TOKENS
    ================================================ */
 :root {
-  --bg-base: #050505;
-  --bg-card: #0B0F0E;
-  --bg-card-hover: #121918;
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-medium: rgba(255, 255, 255, 0.1);
+  /* Backgrounds */
+  --bg-base: #FAFAFF;
+  --bg-secondary: #F3F2FF;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-solid: #FFFFFF;
+  --bg-input: rgba(255, 255, 255, 0.9);
 
-  --bull-green: #00C853;
-  --bull-green-dim: rgba(0, 200, 83, 0.12);
-  --bull-green-border: rgba(0, 200, 83, 0.25);
+  /* Purple Primary */
+  --purple: #7C3AED;
+  --purple-light: #8B5CF6;
+  --purple-dim: rgba(124, 58, 237, 0.08);
+  --purple-border: rgba(124, 58, 237, 0.18);
+  --purple-glow: rgba(124, 58, 237, 0.12);
 
-  --bear-red: #FF3B3B;
-  --bear-red-dim: rgba(255, 59, 59, 0.12);
-  --bear-red-border: rgba(255, 59, 59, 0.25);
+  /* AI Blue */
+  --blue: #6366F1;
+  --blue-dim: rgba(99, 102, 241, 0.08);
 
-  --gold: #F5A623;
-  --gold-dim: rgba(245, 166, 35, 0.12);
+  /* Investment Positive */
+  --bull: #16A34A;
+  --bull-dim: rgba(22, 163, 74, 0.09);
+  --bull-border: rgba(22, 163, 74, 0.25);
 
-  --text-primary: #F0F2F1;
-  --text-secondary: #8B9A96;
-  --text-muted: #4A5C57;
+  /* Risk Negative */
+  --bear: #EF4444;
+  --bear-dim: rgba(239, 68, 68, 0.08);
+  --bear-border: rgba(239, 68, 68, 0.25);
+
+  /* Gold Accent */
+  --gold: #D97706;
+  --gold-dim: rgba(217, 119, 6, 0.09);
+
+  /* Typography */
+  --text-heading: #111827;
+  --text-body: #4B5563;
+  --text-muted: #9CA3AF;
+  --text-subtle: #C4B5FD;
+
+  /* Borders */
+  --border: rgba(0, 0, 0, 0.07);
+  --border-medium: rgba(0, 0, 0, 0.1);
+  --border-purple: rgba(124, 58, 237, 0.18);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.09), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-purple: 0 4px 24px rgba(124, 58, 237, 0.14), 0 1px 4px rgba(124, 58, 237, 0.08);
 }
 
 @theme inline {
   --color-background: var(--bg-base);
-  --color-foreground: var(--text-primary);
+  --color-foreground: var(--text-heading);
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
@@ -47,7 +74,7 @@ html {
 
 body {
   background: var(--bg-base);
-  color: var(--text-primary);
+  color: var(--text-body);
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -55,83 +82,78 @@ body {
 }
 
 /* ================================================
-   CUSTOM SCROLLBAR
+   CUSTOM SCROLLBAR (light)
    ================================================ */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #1f2e2a;
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #2a3d38;
-}
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #DDD6FE; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #C4B5FD; }
 
 /* ================================================
-   GLASS CARD EFFECT
+   GLASS CARD
    ================================================ */
 .glass-card {
-  background: rgba(11, 15, 14, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-md);
 }
 
 .glass-card-hover {
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .glass-card-hover:hover {
-  background: rgba(18, 25, 24, 0.9);
-  border-color: var(--border-medium);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ================================================
+   GRADIENT BACKGROUNDS
+   ================================================ */
+.bg-hero-gradient {
+  background: linear-gradient(135deg, #FAFAFF 0%, #F0EEFF 50%, #EBF3FF 100%);
+}
+
+.gradient-purple-text {
+  background: linear-gradient(135deg, #7C3AED, #6366F1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-green-text {
+  background: linear-gradient(135deg, #16A34A, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #7C3AED, #6366F1);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #6D28D9, #4F46E5);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
   transform: translateY(-1px);
 }
 
 /* ================================================
-   BULL / BEAR GRADIENTS
+   AI GLOW EFFECTS
    ================================================ */
-.gradient-bull {
-  background: linear-gradient(135deg, rgba(0, 200, 83, 0.15) 0%, transparent 60%);
+.glow-purple {
+  box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.2), 0 0 24px rgba(124, 58, 237, 0.12);
 }
 
-.gradient-bear {
-  background: linear-gradient(135deg, rgba(255, 59, 59, 0.15) 0%, transparent 60%);
-}
-
-.gradient-gold {
-  background: linear-gradient(135deg, rgba(245, 166, 35, 0.15) 0%, transparent 60%);
-}
-
-/* ================================================
-   GLOW EFFECTS
-   ================================================ */
 .glow-green {
-  box-shadow: 0 0 20px rgba(0, 200, 83, 0.15), 0 0 40px rgba(0, 200, 83, 0.05);
-}
-
-.glow-red {
-  box-shadow: 0 0 20px rgba(255, 59, 59, 0.15), 0 0 40px rgba(255, 59, 59, 0.05);
-}
-
-/* ================================================
-   METRIC CARD
-   ================================================ */
-.metric-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 20px;
-  transition: all 0.2s ease;
-}
-
-.metric-card:hover {
-  border-color: var(--border-medium);
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.25), 0 0 20px rgba(22, 163, 74, 0.1);
 }
 
 /* ================================================
@@ -148,92 +170,71 @@ body {
   white-space: nowrap;
 }
 
-.ticker-tape:hover {
-  animation-play-state: paused;
-}
+.ticker-tape:hover { animation-play-state: paused; }
 
 /* ================================================
-   PULSE DOT
+   PULSE ANIMATION
    ================================================ */
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 0.4; }
+  100% { transform: scale(0.9); opacity: 0.8; }
 }
 
-.pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
+.pulse-ring { animation: pulse-ring 2.5s ease-in-out infinite; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
 }
+
+.float-card { animation: float 4s ease-in-out infinite; }
 
 /* ================================================
-   AGENT STEP ANIMATIONS
+   FADE SLIDE IN
    ================================================ */
-@keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.fade-slide-in {
-  animation: fadeSlideIn 0.4s ease forwards;
-}
+.fade-up { animation: fadeSlideUp 0.4s ease forwards; }
 
 /* ================================================
-   CHART STYLING
-   ================================================ */
-.recharts-cartesian-grid-horizontal line,
-.recharts-cartesian-grid-vertical line {
-  stroke: rgba(255,255,255,0.04) !important;
-}
-
-.recharts-tooltip-wrapper .recharts-default-tooltip {
-  background: #0B0F0E !important;
-  border: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 8px !important;
-  font-family: 'Inter', sans-serif !important;
-}
-
-/* ================================================
-   SHIMMER LOADER
+   SHIMMER SKELETON
    ================================================ */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
 }
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.03) 25%,
-    rgba(255, 255, 255, 0.07) 50%,
-    rgba(255, 255, 255, 0.03) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 6px;
+  background: linear-gradient(90deg, #F3F2FF 25%, #EDE9FE 50%, #F3F2FF 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 8px;
 }
 
 /* ================================================
-   PROGRESS BAR
+   CHART OVERRIDES (light mode)
    ================================================ */
-@keyframes progress-fill {
-  from { width: 0%; }
-  to { width: var(--target-width); }
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(0, 0, 0, 0.05) !important;
 }
 
 /* ================================================
    SELECTION
    ================================================ */
 ::selection {
-  background: rgba(0, 200, 83, 0.2);
-  color: #F0F2F1;
+  background: rgba(124, 58, 237, 0.15);
+  color: #111827;
 }
 
 /* ================================================
    PRINT STYLES
    ================================================ */
 @media print {
-  body {
-    background: white !important;
-    color: black !important;
-  }
+  body { background: white !important; }
   .no-print { display: none !important; }
 }

@@ -9,7 +9,7 @@ interface MetricCardProps {
   subtext?: string;
   trend?: "up" | "down" | "neutral";
   icon?: React.ReactNode;
-  highlight?: "green" | "red" | "gold" | "none";
+  highlight?: "green" | "red" | "purple" | "none";
 }
 
 export function MetricCard({
@@ -20,57 +20,61 @@ export function MetricCard({
   icon,
   highlight = "none",
 }: MetricCardProps) {
-  const trendColor =
-    trend === "up" ? "#00C853" : trend === "down" ? "#FF3B3B" : "#8B9A96";
-
   const highlightStyle =
     highlight === "green"
-      ? { borderColor: "rgba(0,200,83,0.25)", background: "rgba(0,200,83,0.05)" }
+      ? { borderColor: "rgba(22,163,74,0.2)", background: "rgba(22,163,74,0.04)" }
       : highlight === "red"
-      ? { borderColor: "rgba(255,59,59,0.25)", background: "rgba(255,59,59,0.05)" }
-      : highlight === "gold"
-      ? { borderColor: "rgba(245,166,35,0.25)", background: "rgba(245,166,35,0.05)" }
-      : { borderColor: "rgba(255,255,255,0.06)", background: "#0B0F0E" };
+      ? { borderColor: "rgba(239,68,68,0.2)", background: "rgba(239,68,68,0.04)" }
+      : highlight === "purple"
+      ? { borderColor: "rgba(124,58,237,0.2)", background: "rgba(124,58,237,0.04)" }
+      : { borderColor: "rgba(0,0,0,0.07)", background: "#FFFFFF" };
+
+  const trendColor =
+    trend === "up" ? "#16A34A" : trend === "down" ? "#EF4444" : "#9CA3AF";
 
   return (
     <div
-      className="metric-card glass-card-hover"
-      style={{ ...highlightStyle, borderRadius: 12, padding: "18px 20px", border: "1px solid" }}
+      className="glass-card-hover"
+      style={{
+        ...highlightStyle,
+        border: "1px solid",
+        borderRadius: 20,
+        padding: "20px",
+        boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+        transition: "all 0.22s ease",
+        cursor: "default",
+      }}
     >
       <div className="flex items-start justify-between mb-3">
         <span
           style={{
             fontSize: 11,
-            fontWeight: 600,
-            letterSpacing: "0.08em",
-            color: "#4A5C57",
+            fontWeight: 700,
+            letterSpacing: "0.07em",
+            color: "#9CA3AF",
             textTransform: "uppercase",
           }}
         >
           {label}
         </span>
-        {icon && (
-          <span style={{ color: "#4A5C57" }}>{icon}</span>
-        )}
+        {icon && <span style={{ color: "#C4B5FD" }}>{icon}</span>}
       </div>
 
       <div className="flex items-end justify-between">
         <div>
           <div
             style={{
-              fontSize: 24,
-              fontWeight: 700,
-              color: "#F0F2F1",
+              fontSize: 26,
+              fontWeight: 800,
+              color: "#111827",
               lineHeight: 1,
-              letterSpacing: "-0.02em",
+              letterSpacing: "-0.03em",
             }}
           >
             {value}
           </div>
           {subtext && (
-            <div
-              style={{ fontSize: 12, color: "#8B9A96", marginTop: 4 }}
-            >
+            <div style={{ fontSize: 12, color: "#9CA3AF", marginTop: 5, fontWeight: 400 }}>
               {subtext}
             </div>
           )}
@@ -78,15 +82,25 @@ export function MetricCard({
 
         {trend && (
           <div
-            className="flex items-center gap-1"
-            style={{ fontSize: 12, fontWeight: 600, color: trendColor }}
+            className="flex items-center gap-1 px-2 py-1 rounded-lg"
+            style={{
+              fontSize: 12,
+              fontWeight: 600,
+              color: trendColor,
+              background:
+                trend === "up"
+                  ? "rgba(22,163,74,0.08)"
+                  : trend === "down"
+                  ? "rgba(239,68,68,0.08)"
+                  : "rgba(0,0,0,0.04)",
+            }}
           >
             {trend === "up" ? (
-              <TrendingUp className="w-4 h-4" />
+              <TrendingUp style={{ width: 14, height: 14 }} />
             ) : trend === "down" ? (
-              <TrendingDown className="w-4 h-4" />
+              <TrendingDown style={{ width: 14, height: 14 }} />
             ) : (
-              <Minus className="w-4 h-4" />
+              <Minus style={{ width: 14, height: 14 }} />
             )}
           </div>
         )}
@@ -104,37 +118,33 @@ interface DecisionBadgeProps {
 export function DecisionBadge({ decision, size = "md" }: DecisionBadgeProps) {
   const isInvest = decision === "INVEST";
   const isWatch = decision === "WATCH";
-  const isPass = decision === "PASS";
 
   const label = isInvest ? "BUY" : isWatch ? "HOLD" : "PASS";
 
   const styles = isInvest
     ? {
-        background: "rgba(0, 200, 83, 0.12)",
-        border: "1px solid rgba(0, 200, 83, 0.35)",
-        color: "#00C853",
-        boxShadow: "0 0 16px rgba(0, 200, 83, 0.15)",
+        background: "linear-gradient(135deg, #16A34A, #059669)",
+        color: "white",
+        boxShadow: "0 4px 14px rgba(22, 163, 74, 0.3)",
       }
     : isWatch
     ? {
-        background: "rgba(245, 166, 35, 0.12)",
-        border: "1px solid rgba(245, 166, 35, 0.35)",
-        color: "#F5A623",
-        boxShadow: "0 0 16px rgba(245, 166, 35, 0.15)",
+        background: "linear-gradient(135deg, #D97706, #B45309)",
+        color: "white",
+        boxShadow: "0 4px 14px rgba(217, 119, 6, 0.3)",
       }
     : {
-        background: "rgba(255, 59, 59, 0.12)",
-        border: "1px solid rgba(255, 59, 59, 0.35)",
-        color: "#FF3B3B",
-        boxShadow: "0 0 16px rgba(255, 59, 59, 0.15)",
+        background: "linear-gradient(135deg, #EF4444, #DC2626)",
+        color: "white",
+        boxShadow: "0 4px 14px rgba(239, 68, 68, 0.3)",
       };
 
   const sizeStyle =
     size === "lg"
-      ? { fontSize: 18, fontWeight: 800, padding: "10px 24px", borderRadius: 10, letterSpacing: "0.12em" }
+      ? { fontSize: 20, fontWeight: 900, padding: "10px 28px", borderRadius: 14, letterSpacing: "0.1em" }
       : size === "sm"
-      ? { fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 6, letterSpacing: "0.1em" }
-      : { fontSize: 13, fontWeight: 700, padding: "6px 16px", borderRadius: 8, letterSpacing: "0.1em" };
+      ? { fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 8, letterSpacing: "0.08em" }
+      : { fontSize: 14, fontWeight: 700, padding: "7px 18px", borderRadius: 10, letterSpacing: "0.08em" };
 
   return (
     <span style={{ ...styles, ...sizeStyle, display: "inline-block" }}>
