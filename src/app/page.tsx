@@ -62,13 +62,18 @@ export default function Home() {
       >
         <div className="flex items-center gap-2.5">
           <div
-            className="w-9 h-9 rounded-xl flex items-center justify-center"
+            className="h-9 flex items-center justify-center overflow-hidden rounded-lg bg-white"
             style={{
-              background: "linear-gradient(135deg, #7C3AED, #6366F1)",
-              boxShadow: "0 4px 12px rgba(124,58,237,0.3)",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+              border: "1px solid rgba(0,0,0,0.08)",
+              padding: "2px 4px",
             }}
           >
-            <Sparkles style={{ width: 18, height: 18, color: "white" }} />
+            <img
+              src="/logo.png"
+              alt="InvestIQ Logo"
+              className="h-full w-auto object-contain"
+            />
           </div>
           <div className="flex flex-col leading-none">
             <span style={{ fontSize: 16, fontWeight: 800, color: "#111827", letterSpacing: "-0.02em" }}>

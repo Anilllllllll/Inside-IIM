@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { TrendingUp, TrendingDown, User, Sparkles } from "lucide-react";
+import { TrendingUp, TrendingDown, User } from "lucide-react";
 
 const TICKERS = [
   { symbol: "AAPL", price: "224.50", change: "+1.24%", up: true },
@@ -44,13 +44,18 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/dashboard" className="flex items-center gap-2.5 group" style={{ textDecoration: "none" }}>
           <div
-            className="w-9 h-9 rounded-xl flex items-center justify-center"
+            className="h-9 flex items-center justify-center overflow-hidden rounded-lg bg-white"
             style={{
-              background: "linear-gradient(135deg, #7C3AED, #6366F1)",
-              boxShadow: "0 4px 12px rgba(124, 58, 237, 0.3)",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+              border: "1px solid rgba(0,0,0,0.08)",
+              padding: "2px 4px",
             }}
           >
-            <Sparkles className="w-4.5 h-4.5" style={{ color: "white", width: 18, height: 18 }} />
+            <img
+              src="/logo.png"
+              alt="InvestIQ Logo"
+              className="h-full w-auto object-contain"
+            />
           </div>
           <div className="flex flex-col leading-none">
             <span style={{ fontSize: 16, fontWeight: 800, color: "#111827", letterSpacing: "-0.02em" }}>
