@@ -50,6 +50,10 @@ InvestIQ is a production-level, multi-agent AI investment research terminal that
 ```
 
 ---
+<img width="1917" height="1102" alt="image" src="https://github.com/user-attachments/assets/114b04b8-80f7-497f-a75a-b44974c9f0d5" />
+
+<img width="1917" height="1107" alt="image" src="https://github.com/user-attachments/assets/9bc4133c-c45e-42f0-b9b5-8b1376fc39a6" />
+
 
 ## Tech Stack
 * **Frontend**: Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, Lucide icons.
